@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.util.ArrayList;
 
 
 public class GUI {
@@ -23,11 +25,6 @@ class GUIFrame extends JFrame {
     private JLabel lblLatency;
     private JLabel lblScheduling;
     private JButton btnCalculate;
-    private JRadioButton rbFCFS;
-    private JRadioButton rbSJF;
-    private JRadioButton rbRR;
-    private JRadioButton rbRand;
-    private ButtonGroup btngrpScheduling;
     private JTextArea txtCalculationsOut;
     private JTextField txtSeed;
     private JTextField txtNumProcesses;
@@ -36,6 +33,11 @@ class GUIFrame extends JFrame {
     private JTextField txtQuantum;
     private JTextField txtLatency;
     private JScrollPane scrollOut;
+
+    int numSeed, numProcesses, numArrival, numBurst, numQuantum, numLatency;
+    ArrayList <Process> processList = new ArrayList<Process>();
+    Random rand = new Random();
+
 
 
     public GUIFrame() {
@@ -61,7 +63,7 @@ class GUIFrame extends JFrame {
         lblSeed = new JLabel("Seed:");
         lblSeed.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblSeed.setSize(100, 30);
-        lblSeed.setLocation(980, 150);
+        lblSeed.setLocation(985, 150);
         container.add(lblSeed);
 
         // Set up seed txt field
@@ -71,11 +73,13 @@ class GUIFrame extends JFrame {
         txtSeed.setLocation(1040, 150);
         container.add(txtSeed);
 
+
+
         // Set up a number of processes label and add to container
-        lblNumProcesses = new JLabel("Number of Processes:");
+        lblNumProcesses = new JLabel("Number of Processes (2, 100):");
         lblNumProcesses.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        lblNumProcesses.setSize(200, 30);
-        lblNumProcesses.setLocation(835, 200);
+        lblNumProcesses.setSize(300, 30);
+        lblNumProcesses.setLocation(780, 200);
         container.add(lblNumProcesses);
 
         // Set up number of processes txt field
@@ -86,10 +90,10 @@ class GUIFrame extends JFrame {
         container.add(txtNumProcesses);
 
         // Set up a Last possible arrival time label and add to container
-        lblArrivalTime = new JLabel("Last Possible Arrival Time:");
+        lblArrivalTime = new JLabel("Last Possible Arrival Time (0, 99):");
         lblArrivalTime.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblArrivalTime.setSize(300, 30);
-        lblArrivalTime.setLocation(800, 250);
+        lblArrivalTime.setLocation(764, 250);
         container.add(lblArrivalTime);
 
         // Set up Last possible arrival time txt field
@@ -100,10 +104,10 @@ class GUIFrame extends JFrame {
         container.add(txtArrivalTime);
 
         // Set up a Last possible arrival time label and add to container
-        lblBurstTime = new JLabel("Maximum Burst Time:");
+        lblBurstTime = new JLabel("Maximum Burst Time (1, 100):");
         lblBurstTime.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblBurstTime.setSize(300, 30);
-        lblBurstTime.setLocation(840, 300);
+        lblBurstTime.setLocation(787, 300);
         container.add(lblBurstTime);
 
         // Set up Last possible arrival time txt field
@@ -114,10 +118,10 @@ class GUIFrame extends JFrame {
         container.add(txtBurstTime);
 
         // Set up a Quantum label and add to container
-        lblQuantum = new JLabel("Quantum:");
+        lblQuantum = new JLabel("Quantum (1,100):");
         lblQuantum.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        lblQuantum.setSize(100, 30);
-        lblQuantum.setLocation(937, 350);
+        lblQuantum.setSize(170, 30);
+        lblQuantum.setLocation(883, 350);
         container.add(lblQuantum);
 
         // Set up Quantum txt field
@@ -128,10 +132,10 @@ class GUIFrame extends JFrame {
         container.add(txtQuantum);
 
         // Set up a Latency label and add to container
-        lblLatency = new JLabel("Latency:");
+        lblLatency = new JLabel("Latency (0,10):");
         lblLatency.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        lblLatency.setSize(100, 30);
-        lblLatency.setLocation(950, 400);
+        lblLatency.setSize(170, 30);
+        lblLatency.setLocation(906, 400);
         container.add(lblLatency);
 
         // Set up Latency txt field
@@ -149,72 +153,106 @@ class GUIFrame extends JFrame {
         lblScheduling.setLocation(1200, 150);
         container.add(lblScheduling);
 
-        // Set up Radio Button FCFS, set action, and add to container
-        rbFCFS = new JRadioButton(new AbstractAction("FCFS") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //code
-
-            }
-        });
-        rbFCFS.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        rbFCFS.setSize(150, 20);
-        rbFCFS.setLocation(1200, 200);
-        container.add(rbFCFS);
-
-        // Set up Radio Button SJF, set action, and add to container
-        rbSJF = new JRadioButton(new AbstractAction("SJF") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //code
-
-            }
-        });
-        rbSJF.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        rbSJF.setSize(150, 20);
-        rbSJF.setLocation(1200, 250);
-        container.add(rbSJF);
-
-        // Set up  Radio Button RR, set action, and add to container
-        rbRR = new JRadioButton(new AbstractAction("RR") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //code
-
-            }
-        });
-        rbRR.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        rbRR.setSize(150, 20);
-        rbRR.setLocation(1200, 300);
-        container.add(rbRR);
-
-        // Set up Random Radio Button, set action, and add to container
-        rbRand = new JRadioButton(new AbstractAction("Random") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //code
-
-            }
-        });
-        rbRand.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        rbRand.setSize(150, 20);
-        rbRand.setLocation(1200, 350);
-        container.add(rbRand);
-
-
-        // Adds all of the radio buttons to a button group
-        btngrpScheduling = new ButtonGroup();
-        btngrpScheduling.add(rbFCFS);
-        btngrpScheduling.add(rbSJF);
-        btngrpScheduling.add(rbRR);
-        btngrpScheduling.add(rbRand);
-
 
         // Set up calculate button, set action, and add to container
         btnCalculate = new JButton(new AbstractAction("Calculate") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code
+
+                try{
+                    String seedStr = txtSeed.getText();
+                    numSeed = Integer.parseInt(seedStr);
+
+                }catch (NumberFormatException ex1) {
+                    JOptionPane.showMessageDialog(new JFrame("Seed!!!"), "Please Enter Integer Value", "Seed!!!", JOptionPane.INFORMATION_MESSAGE);
+                    txtSeed.setText("");
+                }
+                try {
+                    String numProcessesStr = txtNumProcesses.getText();
+                    numProcesses = Integer.parseInt(numProcessesStr);
+
+                    if (numProcesses < 2 || numProcesses > 100) {
+                        JOptionPane.showMessageDialog(new JFrame("Number of Processes!!!"), "Please Enter Value Between 2 and 100", "Number of Processes!!!", JOptionPane.INFORMATION_MESSAGE);
+                        txtNumProcesses.setText("");
+                    }
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(new JFrame("Number of Processes!!!"), "Please Enter Integer Value", "Number of Processes!!!", JOptionPane.INFORMATION_MESSAGE);
+                    txtNumProcesses.setText("");
+                }
+
+                try {
+                    String arrivalTimeStr = txtArrivalTime.getText();
+                    numArrival = Integer.parseInt(arrivalTimeStr);
+
+                    if (numArrival < 0 || numArrival > 99) {
+                        JOptionPane.showMessageDialog(new JFrame("Arrival Time!!!"), "Please Enter Value Between 0 and 99", "Arrival Time!!!", JOptionPane.INFORMATION_MESSAGE);
+                        txtArrivalTime.setText("");
+                    }
+                }catch (NumberFormatException ex2){
+                    JOptionPane.showMessageDialog(new JFrame("Arrival Time!!!"), "Please Enter Integer Value", "Arrival Time!!!", JOptionPane.INFORMATION_MESSAGE);
+                    txtArrivalTime.setText("");
+                }
+                try{
+                    String burstTimeStr = txtBurstTime.getText();
+                    numBurst = Integer.parseInt(burstTimeStr);
+
+                    if (numBurst < 1 || numBurst > 100) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Please Enter Value Between 1 and 100", "Burst Time!!!", JOptionPane.INFORMATION_MESSAGE);
+                        txtBurstTime.setText("");
+                    }
+
+                } catch(NumberFormatException ex3){
+                    JOptionPane.showMessageDialog(new JFrame("Burst Time!!!"), "Please Enter Integer Value", "Burst Time!!!", JOptionPane.INFORMATION_MESSAGE);
+                    txtBurstTime.setText("");
+                }
+                try {
+                    String quantumStr = txtQuantum.getText();
+                    numQuantum = Integer.parseInt(quantumStr);
+                    if (numQuantum < 1 || numQuantum > 100) {
+                        JOptionPane.showMessageDialog(new JFrame("Quantum!!!"), "Please Enter Value Between 1 and 100", "Quantum!!!", JOptionPane.INFORMATION_MESSAGE);
+                        txtQuantum.setText("");
+                    }
+
+                }catch (NumberFormatException ex4) {
+                    JOptionPane.showMessageDialog(new JFrame("Quantum!!!"), "Please Enter Integer Value", "Quantum!!!", JOptionPane.INFORMATION_MESSAGE);
+                    txtQuantum.setText("");
+                }
+                try{
+                    String latencyStr = txtLatency.getText();
+                    numLatency = Integer.parseInt(latencyStr);
+                    if (numLatency < 0 || numLatency > 10) {
+                        JOptionPane.showMessageDialog(new JFrame("Latency!!!"), "Please Enter Value Between 0 and 10", "Latency!!!", JOptionPane.INFORMATION_MESSAGE);
+                        txtLatency.setText("");
+                    }
+                }catch(NumberFormatException ex5) {
+                    JOptionPane.showMessageDialog(new JFrame("Latency!!!"), "Please Enter Integer Value", "Latency!!!", JOptionPane.INFORMATION_MESSAGE);
+                    txtLatency.setText("");
+                }
+
+                rand.setSeed(numSeed);
+
+                //Text Area
+                txtCalculationsOut.append("User value---------------------------------------------- \n" );
+                txtCalculationsOut.append("Seed Value: " + txtSeed.getText()+"\n") ;
+                txtCalculationsOut.append("Number of Processes value: " + txtNumProcesses.getText()+"\n");
+                txtCalculationsOut.append("Arrival Time: " + txtArrivalTime.getText()+"\n");
+                txtCalculationsOut.append("Burst Time: " + txtBurstTime.getText()+"\n");
+                txtCalculationsOut.append("Quantum Size: " + txtQuantum.getText()+"\n");
+                txtCalculationsOut.append("Latency: " + txtLatency.getText()+"\n");
+
+                txtSeed.setText("");
+                txtLatency.setText("");
+                txtQuantum.setText("");
+                txtBurstTime.setText("");
+                txtNumProcesses.setText("");
+                txtArrivalTime.setText("");
+
+                createProcesses();
+                for (Process p : processList) {
+                    System.out.print("Process ID: "+p.getPID() +", Process Arrival Time: " + p.getArrivalT() + ", Process Burst Time: " + p.getBurstT() +"\n");
+                }
 
             }
         });
@@ -237,6 +275,37 @@ class GUIFrame extends JFrame {
 
         setVisible(true);
 
+    }
+
+    public void createProcesses(){
+
+        for (int i = 0; i < numProcesses; i++) {
+            String PID = "P" + (i+1);
+            Process newProcess = new Process(PID, randArrivalTime(), randBurstTime());
+            processList.add(newProcess);
+        }
+    }
+
+    public int randArrivalTime() {
+        int retArrivalTime = rand.nextInt(numArrival+1);
+        return retArrivalTime;
+    }
+
+    public int randBurstTime() {
+        int retBurstTime = rand.nextInt(numBurst+1);
+        retBurstTime ++;
+        return retBurstTime;
+    }
+
+    public static void sortList(ArrayList<Process> list)
+    {
+        int lowest = 1000;
+        String pid;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size()-1; j++) {
+                
+            }
+        }
     }
 
 }
