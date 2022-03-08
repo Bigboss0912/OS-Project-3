@@ -241,6 +241,7 @@ class GUIFrame extends JFrame {
                 txtCalculationsOut.append("Burst Time: " + txtBurstTime.getText()+"\n");
                 txtCalculationsOut.append("Quantum Size: " + txtQuantum.getText()+"\n");
                 txtCalculationsOut.append("Latency: " + txtLatency.getText()+"\n");
+                txtCalculationsOut.append("\n");
 
                 txtSeed.setText("");
                 txtLatency.setText("");
@@ -250,12 +251,12 @@ class GUIFrame extends JFrame {
                 txtArrivalTime.setText("");
 
                 createProcesses();
-                sortList(processList,processList.size());
+                sortListByArrivalTime(processList,processList.size());
                 for (Process p : processList) {
                     System.out.print("Process ID: "+p.getPID() +", Process Arrival Time: " + p.getArrivalT() + ", Process Burst Time: " + p.getBurstT() +"\n");
                 }
                 processList.clear();
-                System.out.println("\n\n\n\n\n");
+                System.out.println("\n");
             }
         });
         btnCalculate.setFont(new Font("Century Gothic", Font.BOLD, 15));
@@ -299,7 +300,7 @@ class GUIFrame extends JFrame {
         return retBurstTime;
     }
 
-    public static void sortList(ArrayList<Process> list, int n) {
+    public static void sortListByArrivalTime(ArrayList<Process> list, int n) {
         if (n == 1) {
             return;
         }
@@ -311,7 +312,22 @@ class GUIFrame extends JFrame {
                 list.set(i+1, temp);
             }
         }
-        sortList(list, n-1);
+        sortListByArrivalTime(list, n-1);
+    }
+
+    public static void sortListByBurstTime(ArrayList<Process> list, int n) {
+        if (n == 1) {
+            return;
+        }
+
+        for (int i=0; i < n-1; i++) {
+            if (list.get(i).getBurstT() > list.get(i+1).getBurstT()) {
+                Process temp = list.get(i);
+                list.set(i, list.get(i+1));
+                list.set(i+1, temp);
+            }
+        }
+        sortListByBurstTime(list, n-1);
     }
 
 }
