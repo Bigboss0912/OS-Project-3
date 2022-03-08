@@ -250,10 +250,12 @@ class GUIFrame extends JFrame {
                 txtArrivalTime.setText("");
 
                 createProcesses();
+                sortList(processList,processList.size());
                 for (Process p : processList) {
                     System.out.print("Process ID: "+p.getPID() +", Process Arrival Time: " + p.getArrivalT() + ", Process Burst Time: " + p.getBurstT() +"\n");
                 }
-
+                processList.clear();
+                System.out.println("\n\n\n\n\n");
             }
         });
         btnCalculate.setFont(new Font("Century Gothic", Font.BOLD, 15));
@@ -292,20 +294,24 @@ class GUIFrame extends JFrame {
     }
 
     public int randBurstTime() {
-        int retBurstTime = rand.nextInt(numBurst+1);
+        int retBurstTime = rand.nextInt(numBurst);
         retBurstTime ++;
         return retBurstTime;
     }
 
-    public static void sortList(ArrayList<Process> list)
-    {
-        int lowest = 1000;
-        String pid;
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.size()-1; j++) {
-                
+    public static void sortList(ArrayList<Process> list, int n) {
+        if (n == 1) {
+            return;
+        }
+
+        for (int i=0; i < n-1; i++) {
+            if (list.get(i).getArrivalT() > list.get(i+1).getArrivalT()) {
+                Process temp = list.get(i);
+                list.set(i, list.get(i+1));
+                list.set(i+1, temp);
             }
         }
+        sortList(list, n-1);
     }
 
 }
