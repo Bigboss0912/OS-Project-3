@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f67b7af2-f91d-474b-9e10-52b165534027" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/FCFS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Process.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RR.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Random.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SJF.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" afterDir="false" />
+    <list default="true" id="6b097819-18eb-4e39-ae7e-3f73d475d453" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +16,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="264kQ6v5BwkNiQgXWK86uvG7HYi" />
+  <component name="ProjectId" id="265Z3joHyZ0UphGonW5WJWwrOmx" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,7 +24,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunManager">
     <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -54,23 +43,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f67b7af2-f91d-474b-9e10-52b165534027" name="Changes" comment="" />
-      <created>1646690229422</created>
+      <changelist id="6b097819-18eb-4e39-ae7e-3f73d475d453" name="Changes" comment="" />
+      <created>1646715211853</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1646690229422</updated>
+      <updated>1646715211853</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>
