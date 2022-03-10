@@ -1,48 +1,43 @@
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class FCFS {
 
-    String temp_pid;
-    int quantum,  latency, time, temp_burst;
+    int latency, time;
     ArrayList <Process> processList = new ArrayList<>();
+    String output;
 
-    FCFS(int latency){
+    FCFS(int latency, ArrayList <Process> processList){
         this.latency = latency;
         this.time = 0;
-    }
-
-    public void setProcessList(ArrayList<Process> processList) {
         this.processList = processList;
+        this.output = "";
     }
 
-    public void listtest(){
-        System.out.println(this.processList);
-    }
+    public void runSchedule() {
 
-
-    public String runSchedule() {
-        for (Process p: this.processList) {
-            if (this.time == 0){
-                this.time += p.getBurstT();
-                this.time+=this.latency;
-                temp_pid = p.getPID();
-                temp_burst = p.getBurstT();
-
+        for (int i = 0; i < this.processList.size(); i++) {
+            if (i == 0){
+                this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
+                        this.processList.get(i).getBurstT() + " units\n";
+                this.time += this.processList.get(i).getBurstT();
+                if (this.latency != 0) {
+                    this.output += "@time = " + this.time + ", context switch 1 occurs\n";
+                    this.time+=this.latency;
+                }
+            } else {
+                this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
+                        this.processList.get(i).getBurstT() + " units\n";
+                this.time += this.processList.get(i).getBurstT();
+                if (this.latency != 0 || i != this.processList.size()) {
+                    this.output += "@time = " + this.time + ", context switch " + (i+1) + " occurs\n";
+                    this.time+=this.latency;
+                }
             }
-            else {
-                this.time += p.getBurstT();
-                this.time += this.latency;
-                temp_pid = p.getPID();
-                temp_burst = p.getBurstT();
-            }
-
         }
-        return this.toString();
+        this.output += "@time = " + this.time + ", all processes complete\n";
     }
 
-
-    public String toString(){
-        return "@time = " +this.time + ", " + this.temp_pid+" selected for " + this.temp_burst+ " units\n";
+    public String getOutput(){
+        return this.output;
     }
 }

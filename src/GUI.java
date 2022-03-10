@@ -241,38 +241,37 @@ class GUIFrame extends JFrame {
                 txtCalculationsOut.append("\n");
                 txtCalculationsOut.append(txtNumProcesses.getText()+" processes created.\n");
                 txtCalculationsOut.append(String.format("%7s %18s %18s", "Process", "Arrival", "Burst\n"));
+
                 createProcesses();
                 sortListByArrivalTime(processList,processList.size());
+
                 for (Process p : processList) {
                     txtCalculationsOut.append(String.format("%5s %20s %20s", p.getPID(), p.getArrivalT(), p.getBurstT() + "\n"));
                 }
-                processList.clear();
 
                 txtCalculationsOut.append("\n");
 
                 //Random Schedule instance printout
-                Random_Scheduler random_Scheduler = new Random_Scheduler();
-                txtCalculationsOut.append(random_Scheduler.toString() + "\n\n");
+                Random_Scheduler random_Scheduler = new Random_Scheduler(numSeed, numLatency, processList);
+                txtCalculationsOut.append("Random: \n");
+                txtCalculationsOut.append(random_Scheduler.getOutput() + "\n\n");
 
                 //FCFS Schedule instance printout
-                FCFS FCFS_schedule = new FCFS(numLatency);
-                FCFS_schedule.setProcessList(processList);
+                FCFS FCFS_schedule = new FCFS(numLatency, processList);
                 txtCalculationsOut.append("FCFS: \n");
-                for (int i = 0; i <= numProcesses; i++) {
-                    txtCalculationsOut.append(FCFS_schedule.runSchedule());
-                }
-
-                FCFS_schedule.listtest();
-
+                FCFS_schedule.runSchedule();
+                txtCalculationsOut.append(FCFS_schedule.getOutput()+ "\n\n");
 
                 //SJF Schedule instance printout
-                SJF SJF_schedule = new SJF();
-                txtCalculationsOut.append(SJF_schedule.toString() + "\n\n");
+                SJF SJF_schedule = new SJF(numLatency, processList);
+                txtCalculationsOut.append("SJF: \n");
+                SJF_schedule.runSchedule();
+                txtCalculationsOut.append(SJF_schedule.getOutput() + "\n\n");
 
                 //RR Schedule instance printout
-                RR RR_schedule = new RR();
-                txtCalculationsOut.append(RR_schedule.toString() + "\n\n");
-
+                RR RR_schedule = new RR(numQuantum, numLatency, processList);
+                txtCalculationsOut.append("RR (q = " + numLatency + "):\n");
+                txtCalculationsOut.append(RR_schedule.getOutput() + "\n\n");
 
                 txtSeed.setText("");
                 txtLatency.setText("");
@@ -280,6 +279,7 @@ class GUIFrame extends JFrame {
                 txtBurstTime.setText("");
                 txtNumProcesses.setText("");
                 txtArrivalTime.setText("");
+                processList.clear();
 
 
                 System.out.println("\n");
@@ -340,20 +340,4 @@ class GUIFrame extends JFrame {
         }
         sortListByArrivalTime(list, n-1);
     }
-
-    public static void sortListByBurstTime(ArrayList<Process> list, int n) {
-        if (n == 1) {
-            return;
-        }
-
-        for (int i=0; i < n-1; i++) {
-            if (list.get(i).getBurstT() > list.get(i+1).getBurstT()) {
-                Process temp = list.get(i);
-                list.set(i, list.get(i+1));
-                list.set(i+1, temp);
-            }
-        }
-        sortListByBurstTime(list, n-1);
-    }
-
 }
