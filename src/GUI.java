@@ -2,7 +2,7 @@ import javax.swing.*;
 import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.Random;
 import java.util.ArrayList;
 
 
@@ -36,6 +36,10 @@ class GUIFrame extends JFrame {
 
     int numSeed, numProcesses, numArrival, numBurst, numQuantum, numLatency;
     ArrayList <Process> processList = new ArrayList<Process>();
+    ArrayList<String> FCFS_output = new ArrayList<>();
+    ArrayList<String> SJF_output = new ArrayList<>();
+    ArrayList<String> Random_output = new ArrayList<>();
+    ArrayList<String> RR_output = new ArrayList<>();
     Random rand = new Random();
 
 
@@ -43,7 +47,7 @@ class GUIFrame extends JFrame {
     public GUIFrame() {
         // Set up frame
         setTitle("Process Scheduling Algorithms");
-        setBounds(300, 90, 1500, 800);
+        setBounds(300, 90, 1265, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -146,13 +150,6 @@ class GUIFrame extends JFrame {
         container.add(txtLatency);
 
 
-        // Set up label for scheduling
-        lblScheduling = new JLabel("Scheduling Type");
-        lblScheduling.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        lblScheduling.setSize(200, 30);
-        lblScheduling.setLocation(1200, 150);
-        container.add(lblScheduling);
-
 
         // Set up calculate button, set action, and add to container
         btnCalculate = new JButton(new AbstractAction("Calculate") {
@@ -234,7 +231,7 @@ class GUIFrame extends JFrame {
                 rand.setSeed(numSeed);
 
                 //Text Area
-                txtCalculationsOut.append("User value---------------------------------------------- \n" );
+                txtCalculationsOut.append("User values---------------------------------------------- \n" );
                 txtCalculationsOut.append("Seed Value: " + txtSeed.getText()+"\n") ;
                 txtCalculationsOut.append("Number of Processes value: " + txtNumProcesses.getText()+"\n");
                 txtCalculationsOut.append("Arrival Time: " + txtArrivalTime.getText()+"\n");
@@ -242,6 +239,40 @@ class GUIFrame extends JFrame {
                 txtCalculationsOut.append("Quantum Size: " + txtQuantum.getText()+"\n");
                 txtCalculationsOut.append("Latency: " + txtLatency.getText()+"\n");
                 txtCalculationsOut.append("\n");
+                txtCalculationsOut.append(txtNumProcesses.getText()+" processes created.\n");
+                txtCalculationsOut.append(String.format("%7s %18s %18s", "Process", "Arrival", "Burst\n"));
+                createProcesses();
+                sortListByArrivalTime(processList,processList.size());
+                for (Process p : processList) {
+                    txtCalculationsOut.append(String.format("%5s %20s %20s", p.getPID(), p.getArrivalT(), p.getBurstT() + "\n"));
+                }
+                processList.clear();
+
+                txtCalculationsOut.append("\n");
+
+                //Random Schedule instance printout
+                Random_Scheduler random_Scheduler = new Random_Scheduler();
+                txtCalculationsOut.append(random_Scheduler.toString() + "\n\n");
+
+                //FCFS Schedule instance printout
+                FCFS FCFS_schedule = new FCFS(numLatency);
+                FCFS_schedule.setProcessList(processList);
+                txtCalculationsOut.append("FCFS: \n");
+                for (int i = 0; i <= numProcesses; i++) {
+                    txtCalculationsOut.append(FCFS_schedule.runSchedule());
+                }
+
+                FCFS_schedule.listtest();
+
+
+                //SJF Schedule instance printout
+                SJF SJF_schedule = new SJF();
+                txtCalculationsOut.append(SJF_schedule.toString() + "\n\n");
+
+                //RR Schedule instance printout
+                RR RR_schedule = new RR();
+                txtCalculationsOut.append(RR_schedule.toString() + "\n\n");
+
 
                 txtSeed.setText("");
                 txtLatency.setText("");
@@ -250,12 +281,7 @@ class GUIFrame extends JFrame {
                 txtNumProcesses.setText("");
                 txtArrivalTime.setText("");
 
-                createProcesses();
-                sortListByArrivalTime(processList,processList.size());
-                for (Process p : processList) {
-                    System.out.print("Process ID: "+p.getPID() +", Process Arrival Time: " + p.getArrivalT() + ", Process Burst Time: " + p.getBurstT() +"\n");
-                }
-                processList.clear();
+
                 System.out.println("\n");
             }
         });

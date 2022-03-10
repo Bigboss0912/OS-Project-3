@@ -15,7 +15,6 @@ public class Process {
     public String getPID() {
         return PID;
     }
-
     public int getArrivalT() {
         return arrivalT;
     }
