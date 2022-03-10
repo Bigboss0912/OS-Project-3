@@ -6,9 +6,11 @@
       <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/FCFS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/FCFS.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/Process.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/Process.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/SJF.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/SJF.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FCFS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Process.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Random_Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Random_Scheduler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SJF.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SJF.java" afterDir="false" />
     </list>
@@ -19,6 +21,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

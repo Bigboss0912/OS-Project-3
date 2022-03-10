@@ -22,4 +22,7 @@ public class Process {
         return burstT;
     }
 
+    public void setArrivalT(int arrivalT) {
+        this.arrivalT = arrivalT;
+    }
 }

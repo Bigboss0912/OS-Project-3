@@ -3,9 +3,14 @@ import java.util.Random;
 
 public class Random_Scheduler {
 
-    int seed, latency, time;
-    ArrayList<Process> processList = new ArrayList<>();
+    int latency, seed, time;
+    ArrayList <Process> processList;
+    ArrayList <Process> randomList = new ArrayList<>();
+    ArrayList <Process> copyProcessList = new ArrayList<>();
     String output;
+    String avgCal, AvgCalculated, avgCalRes;
+    int avgTotal;
+    Double avWaitT;
     Random rand = new Random();
 
     Random_Scheduler(int seed, int latency, ArrayList <Process> processList){
@@ -14,34 +19,79 @@ public class Random_Scheduler {
         this.time = 0;
         this.processList = processList;
         this.output = "";
-        this.rand = rand;
+        this.avgCal ="Avg Wait Time = (";
+        this.avgCalRes = "Avg resp time = (";
+        this.AvgCalculated = "(";
+        this. avgTotal =0;
+        this.avWaitT = 0.00;
 
         this.rand.setSeed(this.seed);
     }
 
-    public Process randProcess() {
-        int processIndex = rand.nextInt(this.processList.size());
-        Process retProcess = this.processList.get(processIndex);
-        this.processList.remove(processIndex);
-
-        return retProcess;
+    public void randProcess() {
+        for (Process p:processList) {
+            copyProcessList.add(p);
+        }
+        while (copyProcessList.size()!=0) {
+            int processIndex = this.rand.nextInt(this.copyProcessList.size());
+            Process retProcess = this.copyProcessList.get(processIndex);
+            this.randomList.add(retProcess);
+            this.copyProcessList.remove(processIndex);
+        }
+        System.out.println(randomList);
     }
 
     public void runSchedule() {
-
-        for (int i = 0; i < this.processList.size(); i++) {
+        this.randProcess();
+        for (int i = 0; i < this.randomList.size(); i++) {
             if (i == 0){
-                this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
-                        this.processList.get(i).getBurstT() + " units\n";
-                this.time += this.processList.get(i).getBurstT();
-                this.time+=this.latency;
+                this.randomList.get(i).setArrivalT(0);
+                this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
+                        this.randomList.get(i).getBurstT() + " units\n";
+                this.avgCal += "("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
+                this.AvgCalculated += (this.time - this.randomList.get(i).getArrivalT());
+                this.avgCalRes += "("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
+                this.avgTotal += this.time - this.randomList.get(i).getArrivalT();
+
+
+                this.time += this.randomList.get(i).getBurstT();
+                if (this.latency != 0) {
+                    this.output += "@time = " + this.time + ", context switch 1 occurs\n";
+                    this.time+=this.latency;
+                }
             } else {
-                this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
-                        this.processList.get(i).getBurstT() + " units\n";
-                this.time += this.processList.get(i).getBurstT();
-                this.time += this.latency;
+                if (this.latency != 0 && i < this.randomList.size()-1) {
+                    this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
+                            this.randomList.get(i).getBurstT() + " units\n";
+                    this.avgCal += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
+                    this.AvgCalculated += "+"+(this.time - this.randomList.get(i).getArrivalT());
+                    this.avgTotal += this.time - this.randomList.get(i).getArrivalT();
+                    this.avgCalRes += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
+                    this.time += this.randomList.get(i).getBurstT();
+                    this.output += "@time = " + this.time + ", context switch " + (i+1) + " occurs\n";
+                    this.time+=this.latency;
+
+                }
+                else{
+                    this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
+                            this.randomList.get(i).getBurstT() + " units\n";
+                    this.avgCal += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
+                    this.AvgCalculated += "+"+(this.time - this.randomList.get(i).getArrivalT());
+                    this.avgCalRes += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
+                    this.avgTotal += this.time - this.randomList.get(i).getArrivalT();
+                    this.time += this.randomList.get(i).getBurstT();
+                }
             }
         }
+
+        this.output += "@time = " + this.time + ", all processes complete\n";
+
+        this.output += "Completed in " + this. time+ " cycles.\n";
+        this.avWaitT = (this.avgTotal/(double)this.randomList.size());
+        this.avgCal += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ avWaitT;
+        this.avgCalRes += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ avWaitT;
+        this.output += this.avgCal +"\n";
+        this.output += this.avgCalRes +"\n";
     }
 
     public String getOutput(){

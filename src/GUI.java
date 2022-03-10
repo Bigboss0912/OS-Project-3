@@ -23,7 +23,6 @@ class GUIFrame extends JFrame {
     private JLabel lblBurstTime;
     private JLabel lblQuantum;
     private JLabel lblLatency;
-    private JLabel lblScheduling;
     private JButton btnCalculate;
     private JTextArea txtCalculationsOut;
     private JTextField txtSeed;
@@ -35,11 +34,7 @@ class GUIFrame extends JFrame {
     private JScrollPane scrollOut;
 
     int numSeed, numProcesses, numArrival, numBurst, numQuantum, numLatency;
-    ArrayList <Process> processList = new ArrayList<Process>();
-    ArrayList<String> FCFS_output = new ArrayList<>();
-    ArrayList<String> SJF_output = new ArrayList<>();
-    ArrayList<String> Random_output = new ArrayList<>();
-    ArrayList<String> RR_output = new ArrayList<>();
+    ArrayList <Process> processList = new ArrayList<>();
     Random rand = new Random();
 
 
@@ -254,6 +249,7 @@ class GUIFrame extends JFrame {
                 //Random Schedule instance printout
                 Random_Scheduler random_Scheduler = new Random_Scheduler(numSeed, numLatency, processList);
                 txtCalculationsOut.append("Random: \n");
+                random_Scheduler.runSchedule();
                 txtCalculationsOut.append(random_Scheduler.getOutput() + "\n\n");
 
                 //FCFS Schedule instance printout
