@@ -8,7 +8,7 @@ public class Random_Scheduler {
     ArrayList <Process> randomList = new ArrayList<>();
     ArrayList <Process> copyProcessList = new ArrayList<>();
     String output;
-    String avgCal, AvgCalculated, avgCalRes;
+    String avgCal, AvgCalculated, avgCalRes, str_format;
     int avgTotal;
     Double avWaitT;
     Random rand = new Random();
@@ -24,6 +24,7 @@ public class Random_Scheduler {
         this.AvgCalculated = "(";
         this. avgTotal =0;
         this.avWaitT = 0.00;
+        this.str_format="";
 
         this.rand.setSeed(this.seed);
     }
@@ -38,7 +39,6 @@ public class Random_Scheduler {
             this.randomList.add(retProcess);
             this.copyProcessList.remove(processIndex);
         }
-        System.out.println(randomList);
     }
 
     public void runSchedule() {
@@ -88,8 +88,9 @@ public class Random_Scheduler {
 
         this.output += "Completed in " + this. time+ " cycles.\n";
         this.avWaitT = (this.avgTotal/(double)this.randomList.size());
-        this.avgCal += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ avWaitT;
-        this.avgCalRes += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ avWaitT;
+        this.str_format = String.format("%.2f",avWaitT);
+        this.avgCal += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ str_format;
+        this.avgCalRes += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ str_format;
         this.output += this.avgCal +"\n";
         this.output += this.avgCalRes +"\n";
     }

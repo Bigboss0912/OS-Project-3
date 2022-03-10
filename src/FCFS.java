@@ -5,7 +5,7 @@ public class FCFS {
     int latency, time;
     ArrayList <Process> processList;
     String output;
-    String avgCal, AvgCalculated, avgCalRes;
+    String avgCal, AvgCalculated, avgCalRes, str_format;
     int avgTotal;
     Double avWaitT;
 
@@ -19,6 +19,7 @@ public class FCFS {
         this.AvgCalculated = "(";
         this. avgTotal =0;
         this.avWaitT = 0.00;
+        this.str_format="";
     }
 
     public void runSchedule() {
@@ -68,8 +69,9 @@ public class FCFS {
 
         this.output += "Completed in " + this. time+ " cycles.\n";
         this.avWaitT = (this.avgTotal/(double)this.processList.size());
-        this.avgCal += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ avWaitT;
-        this.avgCalRes += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ avWaitT;
+        this.str_format = String.format("%.2f",avWaitT);
+        this.avgCal += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ str_format;
+        this.avgCalRes += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ str_format;
         this.output += this.avgCal +"\n";
         this.output += this.avgCalRes +"\n";
     }
