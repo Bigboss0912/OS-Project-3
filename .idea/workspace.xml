@@ -5,11 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FCFS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Random_Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Random_Scheduler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SJF.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SJF.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
