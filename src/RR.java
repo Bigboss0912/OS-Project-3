@@ -22,7 +22,7 @@ public class RR {
         this.avgCalRes = "Avg resp time = (";
         this.AvgCalculated = "(";
         this.AvgCalculatedRes = "(";
-        this. avgTotal =0;
+        this.avgTotal =0;
         this.avWaitT = 0.00;
         this.avResT = 0.00;
         this.totalResT = 0.00;
@@ -66,18 +66,12 @@ public class RR {
                     this.time += this.quantum;
                 }
 
-                System.out.println("i == 0 " + this.processList.get(i).getPID());
                 if (this.latency != 0) {
                     this.time+=this.latency;
                 }
             }
 
             else if ( this.processList.get(i).getBurstT() <= this.quantum) {
-
-
-                System.out.println(this.processList.get(i).getPID());
-                System.out.println(this.time);
-                System.out.println(this.latency);
 
                 this.AvgCalculatedRes += "+"+(this.time - this.processList.get(i).getArrivalT());
                 this.avgCalRes += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
@@ -97,8 +91,6 @@ public class RR {
                     this.time += this.latency;
                 }
 
-                System.out.println("else " + this.processList.get(i).getPID());
-                System.out.println("else " + this.time);
                 this.AvgCalculatedRes += "+"+(this.time - this.processList.get(i).getArrivalT());
                 this.avgCalRes += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
                 this.time += this.quantum;
@@ -113,33 +105,71 @@ public class RR {
 
         int contextCount = 0;
         this.time = 0;
+        boolean finalProc = false;
         while (!queue.isEmpty()) {
             Process selectedProc = queue.remove();
 
             if (this.time == 0){
                 this.time += selectedProc.getArrivalT();
-                this.avgCal += "("+this.time +"-"+selectedProc.getArrivalT()+")";
-                this.AvgCalculated += (this.time - selectedProc.getArrivalT());
-                this.avgTotal += this.time - selectedProc.getArrivalT();
-            }
 
-             if (selectedProc.getBurstT() <= this.quantum) {
+                if (selectedProc.getBurstT() <= this.quantum) {
+                    this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                            selectedProc.getBurstT() + " units\n";
+                    this.avgCal += "("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.AvgCalculated += (this.time - selectedProc.getArrivalT());
+                    this.avgTotal += this.time - selectedProc.getArrivalT();
+
+                    if (this.latency != 0) {
+                        contextCount++;
+                        this.output += "@time = " + this.time + ", context switch " + contextCount + " occurs\n";
+                        this.time+=this.latency;
+                    }
+                    finalProc = true;
+
+                } else {
+                    this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                            this.quantum + " units\n";
+                    this.time += this.quantum;
+
+                    if (this.latency != 0) {
+                        contextCount++;
+                        this.output += "@time = " + this.time + ", context switch " + contextCount + " occurs\n";
+                        this.time+=this.latency;
+                    }
+
+                    int tempBurT = selectedProc.getBurstT();
+                    selectedProc.setBurstT((tempBurT-this.quantum));
+                    queue.add(selectedProc);
+                }
+            }else if (selectedProc.getBurstT() <= this.quantum) {
                 this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
                         selectedProc.getBurstT() + " units\n";
+                if (finalProc == true) {
+                    this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
+                } else {
+                    this.avgCal += "("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.AvgCalculated += (this.time - selectedProc.getArrivalT());
+                    finalProc = true;
+                }
+
+                this.avgTotal += this.time - selectedProc.getArrivalT();
+
                 this.time += selectedProc.getBurstT();
+
+                if (queue.isEmpty()) {
+                    break;
+                }
+
                 if (this.latency != 0) {
                     contextCount++;
                     this.output += "@time = " + this.time + ", context switch " + contextCount + " occurs\n";
                     this.time+=this.latency;
                 }
-                if (queue.isEmpty()) {
-                    this.avgTotal += this.time - selectedProc.getArrivalT();
-                    break;
-                }
-                this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
-                this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
-                this.avgTotal += this.time - selectedProc.getArrivalT();
+
+
             } else {
+                System.out.println("else " + selectedProc.getPID());
                 this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
                         this.quantum + " units\n";
                 this.time += this.quantum;
@@ -148,9 +178,6 @@ public class RR {
                     this.output += "@time = " + this.time + ", context switch " + contextCount + " occurs\n";
                     this.time+=this.latency;
                 }
-               // this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
-                //this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
-                //this.avgTotal += this.time - selectedProc.getArrivalT();
 
                 int tempBurT = selectedProc.getBurstT();
                 selectedProc.setBurstT((tempBurT-this.quantum));
