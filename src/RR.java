@@ -169,7 +169,6 @@ public class RR {
 
 
             } else {
-                System.out.println("else " + selectedProc.getPID());
                 this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
                         this.quantum + " units\n";
                 this.time += this.quantum;
