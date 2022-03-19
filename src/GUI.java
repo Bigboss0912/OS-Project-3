@@ -266,7 +266,7 @@ class GUIFrame extends JFrame {
 
                 //RR Schedule instance printout
                 RR RR_schedule = new RR(numQuantum, numLatency, processList);
-                txtCalculationsOut.append("RR (q = " + numLatency + "):\n");
+                txtCalculationsOut.append("RR (q = " + numQuantum + "):\n");
                 RR_schedule.runSchedule();
                 txtCalculationsOut.append(RR_schedule.getOutput() + "\n\n");
 

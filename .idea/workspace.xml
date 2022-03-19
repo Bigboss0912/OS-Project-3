@@ -5,10 +5,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/GUIFrame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OS-Project-3/Process.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OS-Project-3/Process.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FCFS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Process.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Random_Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Random_Scheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SJF.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SJF.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +38,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Iron_Toddlers-BACS487" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunManager">

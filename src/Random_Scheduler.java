@@ -45,7 +45,7 @@ public class Random_Scheduler {
         this.randProcess();
         for (int i = 0; i < this.randomList.size(); i++) {
             if (i == 0){
-                this.randomList.get(i).setArrivalT(0);
+                this.time += this.processList.get(i).getArrivalT();
                 this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
                         this.randomList.get(i).getBurstT() + " units\n";
                 this.avgCal += "("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";

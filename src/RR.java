@@ -8,9 +8,9 @@ public class RR {
     ArrayList <Process> processList;
     Queue<Process> queue = new LinkedList<>();
     String output;
-    String avgCal, AvgCalculated, avgCalRes, str_format;
+    String avgCal, AvgCalculated, avgCalRes, str_format, str_formatRes, AvgCalculatedRes;
     int avgTotal, quantum, temp;
-    Double avWaitT;
+    Double avWaitT, avResT, totalResT;
 
     RR(int quantum, int latency, ArrayList <Process> processList){
         this.latency = latency;
@@ -21,28 +21,74 @@ public class RR {
         this.avgCal ="Avg Wait Time = (";
         this.avgCalRes = "Avg resp time = (";
         this.AvgCalculated = "(";
+        this.AvgCalculatedRes = "(";
         this. avgTotal =0;
         this.avWaitT = 0.00;
+        this.avResT = 0.00;
+        this.totalResT = 0.00;
         this.str_format="";
         this.temp = 0;
     }
 
+    public static void sortListByArrivalTime(ArrayList<Process> list, int n) {
+        if (n == 1) {
+            return;
+        }
+
+        for (int i=0; i < n-1; i++) {
+            if (list.get(i).getArrivalT() > list.get(i+1).getArrivalT()) {
+                Process temp = list.get(i);
+                list.set(i, list.get(i+1));
+                list.set(i+1, temp);
+            }
+        }
+        sortListByArrivalTime(list, n-1);
+    }
+
     public void runSchedule() {
+        sortListByArrivalTime(this.processList, this.processList.size());
         for (Process p : this.processList) {
             queue.add(p);
         }
 
+        for (Process w:
+             queue) {
+            if (this.time == 0) {
+                this.time += w.getArrivalT();
+                this.AvgCalculatedRes += "+"+(this.time - w.getArrivalT());
+                this.avgCalRes += "("+this.time +"-"+w.getArrivalT()+")";
+                this.totalResT += this.time;
+
+                this.time += w.getBurstT();
+                if (this.latency != 0) {
+                    this.time+=this.latency;
+                }
+            } else {
+                this.time += w.getBurstT();
+
+                this.totalResT += this.time;
+                this.AvgCalculatedRes += "+"+(this.time - w.getArrivalT());
+                this.avgCalRes += "+("+this.time +"-"+w.getArrivalT()+")";
+                if (this.latency != 0) {
+                    this.time+=this.latency;
+                }
+            }
+
+        }
+
         int contextCount = 0;
+        this.time = 0;
         while (!queue.isEmpty()) {
             Process selectedProc = queue.remove();
 
             if (this.time == 0){
-                selectedProc.setArrivalT(0);
+                this.time += selectedProc.getArrivalT();
                 this.avgCal += "("+this.time +"-"+selectedProc.getArrivalT()+")";
-                this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
-                this.avgCalRes += "("+this.time +"-"+selectedProc.getArrivalT()+")";
+                this.AvgCalculated += (this.time - selectedProc.getArrivalT());
+                // this.avgCalRes += "("+this.time +"-"+selectedProc.getArrivalT()+")";
                 this.avgTotal += this.time - selectedProc.getArrivalT();
             }
+
             if (selectedProc.getBurstT() <= this.quantum) {
                 this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
                         selectedProc.getBurstT() + " units\n";
@@ -52,9 +98,13 @@ public class RR {
                     this.output += "@time = " + this.time + ", context switch " + contextCount + " occurs\n";
                     this.time+=this.latency;
                 }
+                if (queue.isEmpty()) {
+                    this.avgTotal += this.time - selectedProc.getArrivalT();
+                    break;
+                }
                 this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
                 this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
-                this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                // this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
                 this.avgTotal += this.time - selectedProc.getArrivalT();
             } else {
                 this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
@@ -66,9 +116,9 @@ public class RR {
                     this.time+=this.latency;
                 }
                 this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
-                    this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
-                    this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
-                    this.avgTotal += this.time - selectedProc.getArrivalT();
+                this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
+                // this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                this.avgTotal += this.time - selectedProc.getArrivalT();
 
                 int tempBurT = selectedProc.getBurstT();
                 selectedProc.setBurstT((tempBurT-this.quantum));
@@ -123,9 +173,11 @@ public class RR {
 
         this.output += "Completed in " + this. time+ " cycles.\n";
         this.avWaitT = (this.avgTotal/(double)this.processList.size());
+        this.avResT = (this.totalResT/(double)this.processList.size());
+        this.str_formatRes = String.format("%.2f", avResT);
         this.str_format = String.format("%.2f",avWaitT);
         this.avgCal += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ str_format;
-        this.avgCalRes += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ str_format;
+        this.avgCalRes += ")/"+this.processList.size() + " = " + this.AvgCalculatedRes+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ str_formatRes;
         this.output += this.avgCal +"\n";
         this.output += this.avgCalRes +"\n";
     }

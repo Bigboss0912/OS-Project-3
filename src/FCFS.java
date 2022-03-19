@@ -26,7 +26,7 @@ public class FCFS {
 
         for (int i = 0; i < this.processList.size(); i++) {
             if (i == 0){
-                this.processList.get(i).setArrivalT(0);
+                this.time += this.processList.get(i).getArrivalT();
                 this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
                         this.processList.get(i).getBurstT() + " units\n";
                 this.avgCal += "("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
