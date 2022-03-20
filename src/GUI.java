@@ -45,7 +45,7 @@ class GUIFrame extends JFrame {
         setBounds(300, 90, 1265, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
 
         container = getContentPane();
         container.setLayout(null);
@@ -62,14 +62,14 @@ class GUIFrame extends JFrame {
         lblSeed = new JLabel("Seed:");
         lblSeed.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblSeed.setSize(100, 30);
-        lblSeed.setLocation(985, 150);
+        lblSeed.setLocation(1050, 150);
         container.add(lblSeed);
 
         // Set up seed txt field
         txtSeed = new JTextField();
         txtSeed.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         txtSeed.setSize(100, 30);
-        txtSeed.setLocation(1040, 150);
+        txtSeed.setLocation(1110, 150);
         container.add(txtSeed);
 
 
@@ -78,70 +78,70 @@ class GUIFrame extends JFrame {
         lblNumProcesses = new JLabel("Number of Processes (2, 100):");
         lblNumProcesses.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblNumProcesses.setSize(300, 30);
-        lblNumProcesses.setLocation(780, 200);
+        lblNumProcesses.setLocation(847, 200);
         container.add(lblNumProcesses);
 
         // Set up number of processes txt field
         txtNumProcesses = new JTextField();
         txtNumProcesses.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         txtNumProcesses.setSize(100, 30);
-        txtNumProcesses.setLocation(1040, 200);
+        txtNumProcesses.setLocation(1110, 200);
         container.add(txtNumProcesses);
 
         // Set up a Last possible arrival time label and add to container
         lblArrivalTime = new JLabel("Last Possible Arrival Time (0, 99):");
         lblArrivalTime.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblArrivalTime.setSize(300, 30);
-        lblArrivalTime.setLocation(764, 250);
+        lblArrivalTime.setLocation(830, 250);
         container.add(lblArrivalTime);
 
         // Set up Last possible arrival time txt field
         txtArrivalTime = new JTextField();
         txtArrivalTime.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         txtArrivalTime.setSize(100, 30);
-        txtArrivalTime.setLocation(1040, 250);
+        txtArrivalTime.setLocation(1110, 250);
         container.add(txtArrivalTime);
 
         // Set up a Last possible arrival time label and add to container
         lblBurstTime = new JLabel("Maximum Burst Time (1, 100):");
         lblBurstTime.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblBurstTime.setSize(300, 30);
-        lblBurstTime.setLocation(787, 300);
+        lblBurstTime.setLocation(854, 300);
         container.add(lblBurstTime);
 
         // Set up Last possible arrival time txt field
         txtBurstTime = new JTextField();
         txtBurstTime.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         txtBurstTime.setSize(100, 30);
-        txtBurstTime.setLocation(1040, 300);
+        txtBurstTime.setLocation(1110, 300);
         container.add(txtBurstTime);
 
         // Set up a Quantum label and add to container
         lblQuantum = new JLabel("Quantum (1,100):");
         lblQuantum.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblQuantum.setSize(170, 30);
-        lblQuantum.setLocation(883, 350);
+        lblQuantum.setLocation(950, 350);
         container.add(lblQuantum);
 
         // Set up Quantum txt field
         txtQuantum = new JTextField();
         txtQuantum.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         txtQuantum.setSize(100, 30);
-        txtQuantum.setLocation(1040, 350);
+        txtQuantum.setLocation(1110, 350);
         container.add(txtQuantum);
 
         // Set up a Latency label and add to container
         lblLatency = new JLabel("Latency (0,10):");
         lblLatency.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         lblLatency.setSize(170, 30);
-        lblLatency.setLocation(906, 400);
+        lblLatency.setLocation(970, 400);
         container.add(lblLatency);
 
         // Set up Latency txt field
         txtLatency = new JTextField();
         txtLatency.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         txtLatency.setSize(100, 30);
-        txtLatency.setLocation(1040, 400);
+        txtLatency.setLocation(1110, 400);
         container.add(txtLatency);
 
 
@@ -294,7 +294,7 @@ class GUIFrame extends JFrame {
         txtCalculationsOut.setEditable(false);
 
         scrollOut = new JScrollPane(txtCalculationsOut);
-        scrollOut.setSize(700, 500);
+        scrollOut.setSize(770, 500);
         scrollOut.setLocation(50, 150);
 
         container.add(scrollOut);
