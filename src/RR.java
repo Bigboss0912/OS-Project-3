@@ -60,6 +60,7 @@ public class RR {
                 this.avgCalRes += "("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
                 this.totalResT += this.time - this.processList.get(i).getArrivalT();
 
+
                 if ( this.processList.get(i).getBurstT() <= this.quantum) {
                     this.time += this.processList.get(i).getBurstT();
                 } else {
@@ -78,11 +79,12 @@ public class RR {
 
                 this.AvgCalculatedRes += "+"+(this.time - this.processList.get(i).getArrivalT());
                 this.avgCalRes += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
+                this.totalResT += this.time - this.processList.get(i).getArrivalT();
                 this.time += this.processList.get(i).getBurstT();
                 if (i == this.processList.size()-1) {
                     this.time += this.latency;
                 }
-                this.totalResT += this.time - this.processList.get(i).getArrivalT();
+
 
                 if (this.latency != 0) {
                     this.time+=this.latency;
@@ -100,8 +102,9 @@ public class RR {
 
                 this.AvgCalculatedRes += "+"+(this.time - this.processList.get(i).getArrivalT());
                 this.avgCalRes += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
-                this.time += this.quantum;
                 this.totalResT += this.time - this.processList.get(i).getArrivalT();
+                this.time += this.quantum;
+
 
                 if (this.latency != 0) {
                     this.time+=this.latency;
