@@ -72,6 +72,9 @@ public class RR {
             }
 
             else if ( this.processList.get(i).getBurstT() <= this.quantum) {
+                if(this.processList.get(i).getArrivalT() > this.time){
+                    this.time = this.processList.get(i).getArrivalT();
+                }
 
                 this.AvgCalculatedRes += "+"+(this.time - this.processList.get(i).getArrivalT());
                 this.avgCalRes += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
@@ -89,6 +92,10 @@ public class RR {
 
                 if (i == this.processList.size()-1) {
                     this.time += this.latency;
+                }
+
+                if(this.processList.get(i).getArrivalT() > this.time){
+                    this.time = this.processList.get(i).getArrivalT();
                 }
 
                 this.AvgCalculatedRes += "+"+(this.time - this.processList.get(i).getArrivalT());
@@ -142,6 +149,9 @@ public class RR {
                     queue.add(selectedProc);
                 }
             }else if (selectedProc.getBurstT() <= this.quantum) {
+                if(selectedProc.getArrivalT() > this.time){
+                    this.time = selectedProc.getArrivalT();
+                }
                 this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
                         selectedProc.getBurstT() + " units\n";
                 if (finalProc == true) {
@@ -169,6 +179,9 @@ public class RR {
 
 
             } else {
+                if(selectedProc.getArrivalT() > this.time){
+                    this.time = selectedProc.getArrivalT();
+                }
                 this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
                         this.quantum + " units\n";
                 this.time += this.quantum;

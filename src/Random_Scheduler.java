@@ -44,8 +44,8 @@ public class Random_Scheduler {
     public void runSchedule() {
         this.randProcess();
         for (int i = 0; i < this.randomList.size(); i++) {
-            if (i == 0){
-                this.time += this.processList.get(i).getArrivalT();
+            if (this.time == 0){
+                this.time = this.randomList.get(i).getArrivalT();
                 this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
                         this.randomList.get(i).getBurstT() + " units\n";
                 this.avgCal += "("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
@@ -61,6 +61,9 @@ public class Random_Scheduler {
                 }
             } else {
                 if (this.latency != 0 && i < this.randomList.size()-1) {
+                    if(this.randomList.get(i).getArrivalT() > this.time){
+                        this.time = this.randomList.get(i).getArrivalT();
+                    }
                     this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
                             this.randomList.get(i).getBurstT() + " units\n";
                     this.avgCal += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
@@ -73,6 +76,9 @@ public class Random_Scheduler {
 
                 }
                 else{
+                    if(this.randomList.get(i).getArrivalT() > this.time){
+                        this.time = this.randomList.get(i).getArrivalT();
+                    }
                     this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
                             this.randomList.get(i).getBurstT() + " units\n";
                     this.avgCal += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";

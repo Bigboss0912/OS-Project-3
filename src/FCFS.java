@@ -42,7 +42,7 @@ public class FCFS {
                 }
             } else {
                 if (this.latency != 0 && i < this.processList.size()-1) {
-                    if(this.processList.get(i).getArrivalT() < this.time){
+                    if(this.processList.get(i).getArrivalT() > this.time){
                         this.time = this.processList.get(i).getArrivalT();
                     }
                     this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
@@ -57,7 +57,7 @@ public class FCFS {
 
                 }
                 else{
-                    if(this.processList.get(i).getArrivalT() < this.time){
+                    if(this.processList.get(i).getArrivalT() > this.time){
                         this.time = this.processList.get(i).getArrivalT();
                     }
                     this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
