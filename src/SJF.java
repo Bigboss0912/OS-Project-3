@@ -3,6 +3,7 @@ import java.util.*;
 public class SJF {
     int latency, time;
     ArrayList <Process> processList;
+    ArrayList<Process> queue = new ArrayList<>();
     String output;
     String avgCal, AvgCalculated, avgCalRes, str_format;
     int avgTotal;
@@ -37,53 +38,68 @@ public class SJF {
     }
 
     public void runSchedule() {
-        this.sortListByBurstTime(this.processList, this.processList.size());
-        for (int i = 0; i < this.processList.size(); i++) {
-            if (i == 0){
-                this.time += this.processList.get(i).getArrivalT();
-                this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
-                        this.processList.get(i).getBurstT() + " units\n";
-                this.avgCal += "("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
-                this.AvgCalculated += (this.time - this.processList.get(i).getArrivalT());
-                this.avgCalRes += "("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
-                this.avgTotal += this.time - this.processList.get(i).getArrivalT();
+
+        for (Process p:
+             this.processList) {
+            queue.add(p);
+        }
+
+        int contexcount = 0;
+        while(!queue.isEmpty()) {
+
+            Process selectedProc = queue.get(0);
+            queue.remove(0);
+
+            if (this.time == 0){
+                this.time += selectedProc.getArrivalT();
+                this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                        selectedProc.getBurstT() + " units\n";
+                this.avgCal += "("+this.time +"-"+selectedProc.getArrivalT()+")";
+                this.AvgCalculated += (this.time - selectedProc.getArrivalT());
+                this.avgCalRes += "("+this.time +"-"+selectedProc.getArrivalT()+")";
+                this.avgTotal += this.time - selectedProc.getArrivalT();
 
 
-                this.time += this.processList.get(i).getBurstT();
+                this.time += selectedProc.getBurstT();
                 if (this.latency != 0) {
                     this.output += "@time = " + this.time + ", context switch 1 occurs\n";
                     this.time+=this.latency;
                 }
+                sortListByBurstTime(queue, queue.size());
             } else {
-                if (this.latency != 0 && i < this.processList.size()-1) {
-                    if(this.processList.get(i).getArrivalT() > this.time){
-                        this.time = this.processList.get(i).getArrivalT();
+                if (this.latency != 0 && !queue.isEmpty()) {
+                    if(selectedProc.getArrivalT() > this.time){
+                        queue.add(selectedProc);
+                        continue;
                     }
-                    this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
-                            this.processList.get(i).getBurstT() + " units\n";
-                    this.avgCal += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
-                    this.AvgCalculated += "+"+(this.time - this.processList.get(i).getArrivalT());
-                    this.avgTotal += this.time - this.processList.get(i).getArrivalT();
-                    this.avgCalRes += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
-                    this.time += this.processList.get(i).getBurstT();
-                    this.output += "@time = " + this.time + ", context switch " + (i+1) + " occurs\n";
+                    this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                            selectedProc.getBurstT() + " units\n";
+                    this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
+                    this.avgTotal += this.time - selectedProc.getArrivalT();
+                    this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.time += selectedProc.getBurstT();
+                    contexcount++;
+                    this.output += "@time = " + this.time + ", context switch " + contexcount + " occurs\n";
                     this.time+=this.latency;
 
                 }
                 else{
-                    if(this.processList.get(i).getArrivalT() > this.time){
-                        this.time = this.processList.get(i).getArrivalT();
+                    if(selectedProc.getArrivalT() > this.time){
+                        queue.add(selectedProc);
+                        continue;
                     }
-                    this.output += "@time = " + this.time + ", " + this.processList.get(i).getPID() +" selected for " +
-                            this.processList.get(i).getBurstT() + " units\n";
-                    this.avgCal += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
-                    this.AvgCalculated += "+"+(this.time - this.processList.get(i).getArrivalT());
-                    this.avgCalRes += "+("+this.time +"-"+this.processList.get(i).getArrivalT()+")";
-                    this.avgTotal += this.time - this.processList.get(i).getArrivalT();
-                    this.time += this.processList.get(i).getBurstT();
+                    this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                            selectedProc.getBurstT() + " units\n";
+                    this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
+                    this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.avgTotal += this.time - selectedProc.getArrivalT();
+                    this.time += selectedProc.getBurstT();
                 }
             }
         }
+
 
         this.output += "@time = " + this.time + ", all processes complete\n";
 

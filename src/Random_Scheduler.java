@@ -7,6 +7,7 @@ public class Random_Scheduler {
     ArrayList <Process> processList;
     ArrayList <Process> randomList = new ArrayList<>();
     ArrayList <Process> copyProcessList = new ArrayList<>();
+    ArrayList <Process> queue = new ArrayList<>();
     String output;
     String avgCal, AvgCalculated, avgCalRes, str_format;
     int avgTotal;
@@ -29,9 +30,12 @@ public class Random_Scheduler {
         this.rand.setSeed(this.seed);
     }
 
-    public void randProcess() {
-        for (Process p:processList) {
-            copyProcessList.add(p);
+    public void randProcess(ArrayList <Process> list, int t) {
+        copyProcessList.clear();
+        for (Process p: list) {
+            if (p.getArrivalT() <= t) {
+                copyProcessList.add(p);
+            }
         }
         while (copyProcessList.size()!=0) {
             int processIndex = this.rand.nextInt(this.copyProcessList.size());
@@ -42,50 +46,74 @@ public class Random_Scheduler {
     }
 
     public void runSchedule() {
-        this.randProcess();
-        for (int i = 0; i < this.randomList.size(); i++) {
+
+
+        for (Process p:
+                this.processList) {
+            queue.add(p);
+        }
+
+        int contexcount = 0;
+        Process selectedProc;
+        while(!queue.isEmpty()) {
+
+            if (this.randomList.isEmpty()) {
+                selectedProc = queue.get(0);
+                queue.remove(0);
+            } else {
+                this.randProcess(queue, this.time);
+                selectedProc = this.randomList.get(this.rand.nextInt(this.randomList.size()));
+                queue.remove(selectedProc);
+                this.randomList.clear();
+            }
+
             if (this.time == 0){
-                this.time = this.randomList.get(i).getArrivalT();
-                this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
-                        this.randomList.get(i).getBurstT() + " units\n";
-                this.avgCal += "("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
-                this.AvgCalculated += (this.time - this.randomList.get(i).getArrivalT());
-                this.avgCalRes += "("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
-                this.avgTotal += this.time - this.randomList.get(i).getArrivalT();
+
+                this.time += selectedProc.getArrivalT();
+                this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                        selectedProc.getBurstT() + " units\n";
+                this.avgCal += "("+this.time +"-"+selectedProc.getArrivalT()+")";
+                this.AvgCalculated += (this.time - selectedProc.getArrivalT());
+                this.avgCalRes += "("+this.time +"-"+selectedProc.getArrivalT()+")";
+                this.avgTotal += this.time - selectedProc.getArrivalT();
 
 
-                this.time += this.randomList.get(i).getBurstT();
+                this.time += selectedProc.getBurstT();
                 if (this.latency != 0) {
                     this.output += "@time = " + this.time + ", context switch 1 occurs\n";
                     this.time+=this.latency;
                 }
+
             } else {
-                if (this.latency != 0 && i < this.randomList.size()-1) {
-                    if(this.randomList.get(i).getArrivalT() > this.time){
-                        this.time = this.randomList.get(i).getArrivalT();
+                if (this.latency != 0 && !queue.isEmpty()) {
+                    if(selectedProc.getArrivalT() > this.time){
+                        queue.add(selectedProc);
+                        continue;
                     }
-                    this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
-                            this.randomList.get(i).getBurstT() + " units\n";
-                    this.avgCal += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
-                    this.AvgCalculated += "+"+(this.time - this.randomList.get(i).getArrivalT());
-                    this.avgTotal += this.time - this.randomList.get(i).getArrivalT();
-                    this.avgCalRes += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
-                    this.time += this.randomList.get(i).getBurstT();
-                    this.output += "@time = " + this.time + ", context switch " + (i+1) + " occurs\n";
+                    this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                            selectedProc.getBurstT() + " units\n";
+                    this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
+                    this.avgTotal += this.time - selectedProc.getArrivalT();
+                    this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.time += selectedProc.getBurstT();
+                    contexcount++;
+                    this.output += "@time = " + this.time + ", context switch " + contexcount + " occurs\n";
                     this.time+=this.latency;
 
                 }
                 else{
-                    if(this.randomList.get(i).getArrivalT() > this.time){
-                        this.time = this.randomList.get(i).getArrivalT();
+                    if(selectedProc.getArrivalT() > this.time){
+                        queue.add(selectedProc);
+                        continue;
                     }
-                    this.output += "@time = " + this.time + ", " + this.randomList.get(i).getPID() +" selected for " +
-                            this.randomList.get(i).getBurstT() + " units\n";
-                    this.avgCal += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
-                    this.AvgCalculated += "+"+(this.time - this.randomList.get(i).getArrivalT());
-                    this.avgCalRes += "+("+this.time +"-"+this.randomList.get(i).getArrivalT()+")";
-                    this.avgTotal += this.time - this.randomList.get(i).getArrivalT();
-                    this.time += this.randomList.get(i).getBurstT();
+                    this.output += "@time = " + this.time + ", " + selectedProc.getPID() +" selected for " +
+                            selectedProc.getBurstT() + " units\n";
+                    this.avgCal += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.AvgCalculated += "+"+(this.time - selectedProc.getArrivalT());
+                    this.avgCalRes += "+("+this.time +"-"+selectedProc.getArrivalT()+")";
+                    this.avgTotal += this.time - selectedProc.getArrivalT();
+                    this.time += selectedProc.getBurstT();
                 }
             }
         }
@@ -93,10 +121,10 @@ public class Random_Scheduler {
         this.output += "@time = " + this.time + ", all processes complete\n";
 
         this.output += "Completed in " + this. time+ " cycles.\n";
-        this.avWaitT = (this.avgTotal/(double)this.randomList.size());
+        this.avWaitT = (this.avgTotal/(double)this.processList.size());
         this.str_format = String.format("%.2f",avWaitT);
-        this.avgCal += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ str_format;
-        this.avgCalRes += ")/"+this.randomList.size() + " = " + this.AvgCalculated+")/"+this.randomList.size() + " = " + this.avgTotal + " / "+this.randomList.size() +" = "+ str_format;
+        this.avgCal += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ str_format;
+        this.avgCalRes += ")/"+this.processList.size() + " = " + this.AvgCalculated+")/"+this.processList.size() + " = " + this.avgTotal + " / "+this.processList.size() +" = "+ str_format;
         this.output += this.avgCal +"\n";
         this.output += this.avgCalRes +"\n";
     }
