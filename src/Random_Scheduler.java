@@ -63,7 +63,6 @@ public class Random_Scheduler {
                 queue.remove(0);
             } else {
                 selectedProc = this.randomList.get(this.rand.nextInt(this.randomList.size()));
-                System.out.println(selectedProc.getPID());
                 queue.remove(selectedProc);
                 this.randomList.clear();
             }

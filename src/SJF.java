@@ -45,10 +45,27 @@ public class SJF {
         }
 
         int contexcount = 0;
+        Process selectedProc;
         while(!queue.isEmpty()) {
 
-            Process selectedProc = queue.get(0);
-            queue.remove(0);
+            if (queue.size() > 1) {
+                if (queue.get(0).getArrivalT() == queue.get(1).getArrivalT()) {
+                    if (queue.get(0).getBurstT() >= queue.get(1).getBurstT()) {
+                        selectedProc = queue.get(1);
+                        queue.remove(1);
+                    } else {
+                        selectedProc = queue.get(0);
+                        queue.remove(0);
+                    }
+                } else {
+                    selectedProc = queue.get(0);
+                    queue.remove(0);
+                }
+            } else {
+                selectedProc = queue.get(0);
+                queue.remove(0);
+            }
+
 
             if (this.time == 0){
                 this.time += selectedProc.getArrivalT();
@@ -82,7 +99,6 @@ public class SJF {
                     contexcount++;
                     this.output += "@time = " + this.time + ", context switch " + contexcount + " occurs\n";
                     this.time+=this.latency;
-
                 }
                 else{
                     if(selectedProc.getArrivalT() > this.time){

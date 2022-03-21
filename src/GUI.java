@@ -5,7 +5,10 @@ import java.awt.event.*;
 import java.util.Random;
 import java.util.ArrayList;
 
-
+/*
+By Michael Saenz and Touchsada Jan On
+CS440 - Project 3: Scheduling Algorithms
+ */
 public class GUI {
     public static void main(String[] args) {
         GUIFrame gui =  new GUIFrame();
