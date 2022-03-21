@@ -57,12 +57,13 @@ public class Random_Scheduler {
         Process selectedProc;
         while(!queue.isEmpty()) {
 
+            this.randProcess(queue, this.time);
             if (this.randomList.isEmpty()) {
                 selectedProc = queue.get(0);
                 queue.remove(0);
             } else {
-                this.randProcess(queue, this.time);
                 selectedProc = this.randomList.get(this.rand.nextInt(this.randomList.size()));
+                System.out.println(selectedProc.getPID());
                 queue.remove(selectedProc);
                 this.randomList.clear();
             }
